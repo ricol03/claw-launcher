@@ -2,8 +2,10 @@ package com.whiskersapps.clawlauncher.settings.di
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
+import com.whiskersapps.clawlauncher.shared.model.HomeSettings
 import com.whiskersapps.clawlauncher.shared.model.SecuritySettings
 import com.whiskersapps.clawlauncher.shared.model.Settings
 import io.realm.kotlin.Realm
@@ -108,6 +110,18 @@ class SettingsRepo(
                 hideAppLabels = preferences[Settings.HIDE_APP_LABELS]
                     ?: Settings.DEFAULT_HIDE_APP_LABELS,
 
+                showQuickButton = preferences[Settings.QUICK_BUTTON]
+                    ?: Settings.DEFAULT_QUICK_BUTTON,
+
+                showSecondQuickButton = preferences[Settings.SECOND_QUICK_BUTTON]
+                    ?: Settings.DEFAULT_SECOND_QUICK_BUTTON,
+
+                buttonAppOne = preferences[Settings.BUTTON_APP_ONE]
+                    ?: Settings.DEFAULT_BUTTON_APP_ONE,
+
+                buttonAppTwo = preferences[Settings.BUTTON_APP_TWO]
+                    ?: Settings.DEFAULT_BUTTON_APP_TWO,
+
                 iconPack = preferences[Settings.ICON_PACK] ?: Settings.DEFAULT_ICON_PACK
             )
 
@@ -186,6 +200,14 @@ class SettingsRepo(
         dataStore.edit { it[Settings.DARK_THEME] = theme }
     }
 
+    suspend fun setButtonAppOne(app: String) {
+        dataStore.edit { it[Settings.BUTTON_APP_ONE] = app }
+    }
+
+    suspend fun setButtonAppTwo(app: String) {
+        dataStore.edit { it[Settings.BUTTON_APP_TWO] = app }
+    }
+
     private fun getHiddenApps(): List<String> {
         return realm.query<SecuritySettings>().find().firstOrNull()?.hiddenApps ?: emptyList()
     }
@@ -253,6 +275,18 @@ class SettingsRepo(
     suspend fun setPillShapeClock(pill: Boolean) {
         dataStore.edit { it[Settings.PILL_SHAPE_CLOCK] = pill }
     }
+
+    suspend fun setQuickButton(quickButton: Boolean) {
+        dataStore.edit { it[Settings.QUICK_BUTTON] = quickButton }
+    }
+
+    suspend fun setSecondQuickButton(secondButton: Boolean) {
+        dataStore.edit { it[Settings.SECOND_QUICK_BUTTON] = secondButton }
+    }
+
+    /*suspend fun setButtonAppOne(buttonOne: String) {
+        dataStore.edit { it[Settings.BUTTON_APP_ONE] = secondButton }
+    }*/
 
     suspend fun setHideAppLabels(hide: Boolean) {
         dataStore.edit { it[Settings.HIDE_APP_LABELS] = hide }

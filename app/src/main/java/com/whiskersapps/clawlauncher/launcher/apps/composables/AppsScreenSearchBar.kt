@@ -36,7 +36,12 @@ fun AppsScreenSearchBar(
                 } else {
                     onAction(AppsScreenAction.CloseKeyboard)
                 }
-            }
+            },
+            quickButton = false,
+            secondButton = false,
+            packageNameOne = null,
+            packageNameTwo = null,
+            apps = null
         )
     }
 }

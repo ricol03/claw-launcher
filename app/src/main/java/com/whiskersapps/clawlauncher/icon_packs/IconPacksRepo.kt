@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.AdaptiveIconDrawable
+import android.graphics.drawable.Icon
+import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.whiskersapps.clawlauncher.settings.di.SettingsRepo
@@ -153,6 +155,9 @@ class IconPacksRepo(
             settingsRepo.settings.value.iconPack,
             packageName
         ) else null
+
+        Log.i("icone stock", stockIcon.toString())
+        Log.i("icone buscado", themedIcon.toString())
 
         return Icons(
             stock = stockIcon,

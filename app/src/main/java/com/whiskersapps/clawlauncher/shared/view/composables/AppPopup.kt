@@ -52,7 +52,7 @@ fun AppPopup(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    AppIcon(app = app, size = 64.dp)
+                    AppIcon(app = app, size = 64.dp, useThemed = true)
 
                     Spacer(Modifier.height(16.dp))
 

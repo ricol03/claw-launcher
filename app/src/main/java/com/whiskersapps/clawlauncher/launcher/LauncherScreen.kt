@@ -155,7 +155,6 @@ fun LauncherScreen(
                             state = pagerState
                         ) { page ->
                             if (page == 0) {
-
                                 HomeScreenRoot(sheetState)
                             }
 

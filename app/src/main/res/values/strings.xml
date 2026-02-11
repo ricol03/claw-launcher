@@ -43,7 +43,7 @@
     <string name="StyleSettings_system">System</string>
     <string name="StyleSettings_light">Light</string>
     <string name="StyleSettings_dark">Dark</string>
-    <string name="StyleSettings_dark_mode">Dark Mode</string>
+    <string name="StyleSettings_dark_mode">Style</string>
     <string name="StyleSettings_light_theme">Light Theme</string>
     <string name="StyleSettings_dark_theme">Dark Theme</string>
 
@@ -70,6 +70,10 @@
     <string name="HomeSettings_swipe_to_search_description">Swipe up on the screen to open the search drawer</string>
     <string name="HomeSettings_search_bar">Search Bar</string>
     <string name="HomeSettings_search_bar_description">Show the search bar</string>
+    <string name="HomeSettings_quick_button">Quick Button</string>
+    <string name="HomeSettings_quick_button_description">Shows the quick button in the search bar</string>
+    <string name="HomeSettings_second_quick_button">Show second button</string>
+    <string name="HomeSettings_second_quick_button_description">Shows an additional second button</string>
     <string name="HomeSettings_placeholder">Placeholder</string>
     <string name="HomeSettings_placeholder_description">Show the placeholder</string>
     <string name="HomeSettings_settings">Settings</string>
@@ -112,7 +116,7 @@
     <string name="BookmarksScreen_groups">Groups</string>
     <string name="BookmarksScreen_no_groups">No groups. Click on add to add one</string>
     <string name="BookmarksScreen_add_bookmark">Add Bookmark</string>
-    <string name="BookmarksScreen_url">Url</string>
+    <string name="BookmarksScreen_url">URL</string>
     <string name="BookmarksScreen_edit_bookmark">Edit Bookmark</string>
     <string name="BookmarksScreen_add_group">Add Group</string>
     <string name="BookmarksScreen_news">News</string>
@@ -139,6 +143,7 @@
     <string name="AboutScreen_version">Version</string>
     <string name="AboutScreen_license">License</string>
     <string name="AboutScreen_source_code">Source Code</string>
+    <string name="AboutScreen_developed_by">Developed by</string>
     <string name="AboutScreen_donate">Donate</string>
 
 
@@ -149,7 +154,7 @@
     <string name="SettingsScreen_lock_screen">Lock Screen</string>
     <string name="SettingsScreen_lock_screen_description">Screen lock settings</string>
     <string name="title_activity_on_boarding">OnBoardingActivity</string>
-    <string name="LauncherScreen_Loading">Loading</string>
+    <string name="LauncherScreen_Loading">Loading...</string>
     <string name="AppsSettings_view_description">Select the view type for the apps</string>
     <string name="AppsSettings_search_bar_position_description">The search bar position</string>
     <string name="HomeSettings_pill_shape">Pill Shape</string>

@@ -31,6 +31,12 @@ data class Settings(
     /** Show the home search bar */
     val showHomeSearchBar: Boolean = DEFAULT_SHOW_HOME_SEARCH_BAR,
 
+    /** Show the first quick button on the search bar */
+    val showQuickButton: Boolean = DEFAULT_QUICK_BUTTON,
+
+    /** Show the second quick button on the search bar */
+    val showSecondQuickButton: Boolean = DEFAULT_SECOND_QUICK_BUTTON,
+
     /** Show the placeholder on the home screen */
     val showHomeSearchBarPlaceholder: Boolean = DEFAULT_SHOW_HOME_SEARCH_BAR_PLACEHOLDER,
 
@@ -71,6 +77,10 @@ data class Settings(
      *
      * Possible values: "monet", "panther-{accent}"" */
     val darkTheme: String = DEFAULT_DARK_THEME,
+
+    /** Strings for package names that will be used for the quick buttons */
+    val buttonAppOne: String = "",
+    val buttonAppTwo: String = "",
 
     /** A list of apps package names that will be hidden on search and apps screen */
     val hiddenApps: List<String> = emptyList(),
@@ -167,6 +177,20 @@ data class Settings(
 
         val TINT_CLOCK = booleanPreferencesKey("tint-clock")
         const val DEFAULT_TINT_CLOCK = false
+
+        val QUICK_BUTTON = booleanPreferencesKey("quick-button")
+        const val DEFAULT_QUICK_BUTTON = false
+
+        val BUTTON_APP_ONE = stringPreferencesKey("button-one")
+        val DEFAULT_BUTTON_APP_ONE = ""
+
+        val BUTTON_APP_TWO = stringPreferencesKey("button-two")
+        val DEFAULT_BUTTON_APP_TWO = ""
+
+
+
+        val SECOND_QUICK_BUTTON = booleanPreferencesKey("second-quick-button")
+        const val DEFAULT_SECOND_QUICK_BUTTON = false
 
         val SPLIT_LIST_VIEW = booleanPreferencesKey("split-list-view")
         const val DEFAULT_SPLIT_LIST_VIEW = true

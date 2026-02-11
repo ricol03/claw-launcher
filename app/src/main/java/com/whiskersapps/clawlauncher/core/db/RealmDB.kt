@@ -2,6 +2,7 @@ package com.whiskersapps.clawlauncher.core.db
 
 import com.whiskersapps.clawlauncher.shared.model.Bookmark
 import com.whiskersapps.clawlauncher.shared.model.BookmarkGroup
+import com.whiskersapps.clawlauncher.shared.model.HomeSettings
 import com.whiskersapps.clawlauncher.shared.model.SearchEngine
 import com.whiskersapps.clawlauncher.shared.model.SecuritySettings
 import io.realm.kotlin.Realm
@@ -13,11 +14,15 @@ fun getRealmDB(): Realm {
             SearchEngine::class,
             Bookmark::class,
             BookmarkGroup::class,
-            SecuritySettings::class
+            SecuritySettings::class,
+            HomeSettings::class
         )
     ).schemaVersion(1)
         .compactOnLaunch()
+        .deleteRealmIfMigrationNeeded()
         .build()
+
+
 
     return Realm.open(config)
 }

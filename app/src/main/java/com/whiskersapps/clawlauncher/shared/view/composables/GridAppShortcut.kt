@@ -54,7 +54,7 @@ fun GridAppShortcut(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        AppIcon(app = app)
+        AppIcon(app = app, useThemed = true)
 
         Spacer(modifier = Modifier.height(8.dp))
 

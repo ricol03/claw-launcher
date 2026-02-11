@@ -71,7 +71,7 @@ fun SecureAppsDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(modifier = Modifier.size(36.dp)) {
-                        AppIcon(app = app)
+                        AppIcon(app = app, useThemed = true)
                     }
 
                     Spacer(modifier = Modifier.width(8.dp))

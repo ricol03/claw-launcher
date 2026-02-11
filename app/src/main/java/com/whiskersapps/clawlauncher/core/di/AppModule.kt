@@ -83,7 +83,7 @@ val appModule = module {
     }
 
     viewModel<HomeScreenVM> {
-        HomeScreenVM(get(), get())
+        HomeScreenVM(get(), get(), get())
     }
 
     viewModel<SearchScreenVM> {
@@ -107,7 +107,7 @@ val appModule = module {
     }
 
     viewModel {
-        HomeSettingsScreenVM(get())
+        HomeSettingsScreenVM(get(), get())
     }
 
     viewModel {

@@ -1,5 +1,6 @@
 package com.whiskersapps.clawlauncher.settings.security
 
+import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -82,7 +83,8 @@ class SecuritySettingsScreenVM(
                 )
             )
         }
-    }
+
+        Log.i("dps da copia", state.value.settings.hiddenApps.toString())    }
 
     private fun showSecureAppsDialog(fragmentActivity: FragmentActivity) {
         requestFingerprint(

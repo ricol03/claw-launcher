@@ -133,7 +133,12 @@ fun SearchScreen(
                         onDone = {
                             onAction(OnRunAction(activity))
                             onAction(OnCloseSheet)
-                        }
+                        },
+                        quickButton = false,
+                        secondButton = false,
+                        packageNameOne = null,
+                        packageNameTwo = null,
+                        apps = null
                     )
                 }
 

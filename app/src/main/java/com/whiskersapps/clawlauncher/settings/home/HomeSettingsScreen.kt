@@ -1,5 +1,7 @@
 package com.whiskersapps.clawlauncher.settings.home
 
+import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
@@ -13,8 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.whiskersapps.clawlauncher.R
+import com.whiskersapps.clawlauncher.settings.security.HiddenAppsDialog
+import com.whiskersapps.clawlauncher.settings.security.SecuritySettingsScreenAction
+import com.whiskersapps.clawlauncher.settings.style.StyleSettingsScreenIntent
 import com.whiskersapps.clawlauncher.shared.view.composables.ContentColumn
 import com.whiskersapps.clawlauncher.shared.view.composables.NavBar
+import com.whiskersapps.clawlauncher.shared.view.composables.SimpleSetting
 import com.whiskersapps.clawlauncher.shared.view.composables.SliderSetting
 import com.whiskersapps.clawlauncher.shared.view.composables.SwitchSetting
 import com.whiskersapps.clawlauncher.shared.view.composables.settingPadding
@@ -131,6 +137,46 @@ fun HomeSettingsScreen(
             }
         )
 
+        if (state.showSearchBar) {
+            SwitchSetting(
+                title = stringResource(R.string.HomeSettings_quick_button),
+                description = stringResource(R.string.HomeSettings_quick_button_description),
+                value = state.setQuickButton,
+                onValueChange = {
+                    onAction(HomeSettingsScreenAction.SetQuickButton(it))
+                }
+            )
+
+            if (state.setQuickButton) {
+                SimpleSetting(
+                    title = "Select app (first button)",
+                    value = "Select the app to be available as the first quick button",
+                    onClick = {
+                        onAction(HomeSettingsScreenAction.OpenButtonAppDialog(true))
+                    }
+                )
+
+                SwitchSetting(
+                    title = stringResource(R.string.HomeSettings_second_quick_button),
+                    description = stringResource(R.string.HomeSettings_second_quick_button_description),
+                    value = state.setSecondQuickButton,
+                    onValueChange = {
+                        onAction(HomeSettingsScreenAction.SetSecondQuickButton(it))
+                    }
+                )
+
+                if (state.setSecondQuickButton) {
+                    SimpleSetting(
+                        title = "Select app (second button)",
+                        value = "Select the app to be available as the second quick button",
+                        onClick = {
+                            onAction(HomeSettingsScreenAction.OpenButtonAppDialog(false))
+                        }
+                    )
+                }
+            }
+        }
+
         SwitchSetting(
             title = stringResource(R.string.HomeSettings_placeholder),
             description = stringResource(R.string.HomeSettings_placeholder_description),
@@ -155,5 +201,8 @@ fun HomeSettingsScreen(
                 onAction(HomeSettingsScreenAction.SaveSearchBarRadius(it))
             }
         )
+
+        HomeSettingsDialog(onAction = { onAction(it) }, state = state)
+
     }
 }

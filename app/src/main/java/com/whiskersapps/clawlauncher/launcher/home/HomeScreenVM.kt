@@ -5,6 +5,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.whiskersapps.clawlauncher.launcher.apps.di.AppsRepo
 import com.whiskersapps.clawlauncher.launcher.lock.ScreenLock
 import com.whiskersapps.clawlauncher.settings.SettingsActivity
 import com.whiskersapps.clawlauncher.settings.di.SettingsRepo
@@ -20,6 +21,7 @@ import java.util.Locale
 
 class HomeScreenVM(
     private val settingsRepo: SettingsRepo,
+    private val appsRepo: AppsRepo,
     private val app: Application
 ) : ViewModel() {
 
@@ -32,14 +34,20 @@ class HomeScreenVM(
                 _state.update {
                     it.copy(
                         loading = false,
+                        apps = appsRepo.allApps,
                         clockPlacement = settings.clockPlacement,
                         enableSwipeUp = settings.swipeUpToSearch,
                         showSearchBar = settings.showHomeSearchBar,
                         showPlaceholder = settings.showHomeSearchBarPlaceholder,
                         searchBarRadius = settings.homeSearchBarRadius.toFloat(),
                         tintClock = settings.tintClock,
-                        pillShapeClock = settings.pillShapeClock
-                    )
+                        pillShapeClock = settings.pillShapeClock,
+                        setQuickButton = settings.showQuickButton,
+                        setSecondQuickButton = settings.showSecondQuickButton,
+                        buttonAppOne = settings.buttonAppOne,
+                        buttonAppTwo = settings.buttonAppTwo,
+
+                        )
                 }
             }
         }
@@ -136,7 +144,6 @@ class HomeScreenVM(
     private fun setShowMenuDialog(show: Boolean) {
         _state.update { it.copy(showMenuDialog = show) }
     }
-
 
     private fun onOpenCalendar() {
         try {

@@ -138,6 +138,27 @@ fun AboutScreen(
 
 
         Column(
+            Modifier
+                .fillMaxWidth()
+                .clickable { onAction(AboutScreenAction.OpenRepoUrl) }
+                .settingPadding()
+        ) {
+            Text(
+                text = stringResource(R.string.AboutScreen_developed_by),
+                color = MaterialTheme.colorScheme.onBackground,
+                style = Typography.titleSmall
+            )
+
+            Text(
+                text = "lighttigerxiv / ricol03",
+                color = MaterialTheme.colorScheme.onBackground,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+
+
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { onAction(AboutScreenAction.OpenDonateLink) }

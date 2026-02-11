@@ -1,5 +1,6 @@
-package com.whiskersapps.clawlauncher.settings.security
+package com.whiskersapps.clawlauncher.settings.home
 
+import androidx.collection.emptyLongSet
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,27 +30,34 @@ import com.whiskersapps.clawlauncher.shared.view.composables.NavBar
 import com.whiskersapps.clawlauncher.shared.view.composables.sidePadding
 
 @Composable
-fun HiddenAppsDialog(
-    onAction: (SecuritySettingsScreenAction) -> Unit,
-    state: SecuritySettingsScreenState
+fun HomeSettingsDialog(
+    onAction: (HomeSettingsScreenAction) -> Unit,
+    state: HomeSettingsScreenState
 ) {
     Dialog(
-        show = state.hiddenAppsDialog.show,
-        onDismiss = { onAction(SecuritySettingsScreenAction.CloseHiddenAppsDialog) },
+        show = state.homeSettingsDialog.show,
+        onDismiss = { onAction(HomeSettingsScreenAction.CloseButtonAppDialog) },
         fullScreen = true,
         scrollable = false
     ) {
         NavBar(
-            navigateBack = { onAction(SecuritySettingsScreenAction.CloseHiddenAppsDialog) },
+            navigateBack = { onAction(HomeSettingsScreenAction.CloseButtonAppDialog) },
             useCloseIcon = true
         ) {
-            Button(onClick = { onAction(SecuritySettingsScreenAction.SaveHiddenApps) }) {
+            Button(onClick = { onAction(HomeSettingsScreenAction.SaveButtonApp) }) {
                 Text(
                     text = stringResource(R.string.Save),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }
+
+        if (state.homeSettingsDialog.button)
+            Text(
+                text = "App selecionada: " + state.homeSettingsDialog.selectedAppOne
+            )
+        else
+            Text(text = "App selecionada: " + state.homeSettingsDialog.selectedAppTwo)
 
         LazyColumn(
             modifier = Modifier.sidePadding(),
@@ -59,14 +67,17 @@ fun HiddenAppsDialog(
                 items = state.apps
             ) { app ->
 
-                val selected = state.hiddenAppsDialog.selectedApps.contains(app.packageName)
+                val selected: Boolean = if (state.homeSettingsDialog.button)
+                    state.homeSettingsDialog.selectedAppOne.contains(app.packageName)
+                else
+                    state.homeSettingsDialog.selectedAppTwo.contains(app.packageName)
 
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(CircleShape)
                         .background(if (selected) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.background)
-                        .clickable { onAction(SecuritySettingsScreenAction.ToggleHiddenApp(app.packageName)) }
+                        .clickable { onAction(HomeSettingsScreenAction.ToggleButtonApp(app.packageName)) }
                         .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
