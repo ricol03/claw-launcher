@@ -1,5 +1,6 @@
 package com.whiskersapps.clawlauncher.launcher.apps
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -162,7 +163,7 @@ fun AppsScreen(
                                         ) {
 
                                             Box(modifier = Modifier.size(48.dp)) {
-                                                AppIcon(app = app, useThemed = true)
+                                                AppIcon(app = app, isThemed = true)
                                             }
 
                                             Spacer(modifier = Modifier.width(16.dp))
@@ -243,7 +244,7 @@ fun AppsScreen(
                                         ) {
 
                                             Box(modifier = Modifier.size(48.dp)) {
-                                                AppIcon(app = app, useThemed = true)
+                                                AppIcon(app = app, isThemed = true)
                                             }
 
                                             Spacer(modifier = Modifier.width(16.dp))

@@ -1,7 +1,13 @@
 package com.whiskersapps.clawlauncher.launcher.search.composables
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.util.Log
+import androidx.annotation.NonNull
+import androidx.collection.emptyLongSet
 import androidx.compose.foundation.Image
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
@@ -41,6 +48,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.whiskersapps.clawlauncher.R
 import com.whiskersapps.clawlauncher.shared.model.App
+import androidx.core.graphics.createBitmap
+
 
 @Composable
 fun SearchBar(
@@ -53,6 +62,7 @@ fun SearchBar(
     backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
     focus: Boolean = false,
     onFocused: () -> Unit = {},
+    isThemed: Boolean,
     quickButton: Boolean,
     secondButton: Boolean,
     packageNameOne: String?,
@@ -156,18 +166,23 @@ fun SearchBar(
                     IconButton(
                         modifier = Modifier.size(32.dp),
                         content = {
-                            val bitmap = trueAppOne?.icons?.stock?.default?.asImageBitmap()
+                            var drawable: Drawable? = null
 
-                            bitmap?.let {
-                                Image(
-                                    modifier = Modifier
-                                        .fillMaxHeight()
-                                        .aspectRatio(1f),
-                                    bitmap = it,
-                                    contentDescription = "${trueAppOne?.packageName} icon",
-                                    contentScale = ContentScale.FillBounds,
-                                )
-                            }
+                            drawable = if (isThemed)
+                                trueAppOne?.icons?.themed?.drawable
+                            else
+                                trueAppOne?.icons?.stock?.drawable
+
+                            val bitmap = getBitmapFromDrawable(drawable)
+
+                            Image(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .aspectRatio(1f),
+                                bitmap = bitmap!!.asImageBitmap(),
+                                contentDescription = "${trueAppOne!!.packageName} icon",
+                                contentScale = ContentScale.FillBounds,
+                            )
                         },
                         onClick = {
                             val intent = context.packageManager
@@ -182,18 +197,23 @@ fun SearchBar(
                         IconButton(
                             modifier = Modifier.size(32.dp),
                             content = {
-                                val bitmap = trueAppTwo?.icons?.stock?.default?.asImageBitmap()
+                                var drawable: Drawable? = null
 
-                                bitmap?.let {
-                                    Image(
-                                        modifier = Modifier
-                                            .fillMaxHeight()
-                                            .aspectRatio(1f),
-                                        bitmap = it,
-                                        contentDescription = "${trueAppTwo?.packageName} icon",
-                                        contentScale = ContentScale.FillBounds,
-                                    )
-                                }
+                                drawable = if (isThemed)
+                                    trueAppTwo?.icons?.themed?.drawable
+                                else
+                                    trueAppTwo?.icons?.stock?.drawable
+
+                                val bitmap = getBitmapFromDrawable(drawable)
+
+                                Image(
+                                    modifier = Modifier
+                                        .fillMaxHeight()
+                                        .aspectRatio(1f),
+                                    bitmap = bitmap!!.asImageBitmap(),
+                                    contentDescription = "${trueAppTwo!!.packageName} icon",
+                                    contentScale = ContentScale.FillBounds,
+                                )
                             },
                             onClick = {
                                 val intent = context.packageManager
@@ -206,7 +226,24 @@ fun SearchBar(
                 }
             }
         }
-
-
     }
+}
+
+
+// Source - https://stackoverflow.com/a/52453231
+// Posted by Shashank Holla
+// Retrieved 2026-02-14, License - CC BY-SA 4.0
+fun getBitmapFromDrawable(drawable: Drawable?): Bitmap? {
+    var bmp: Bitmap? = null
+
+    try {
+        bmp = createBitmap(drawable!!.getIntrinsicWidth(), drawable.getIntrinsicHeight())
+        val canvas = Canvas(bmp)
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight())
+        drawable.draw(canvas)
+
+    } catch (e: NullPointerException) {
+        Log.i("NullPointerException", e.printStackTrace().toString())
+    }
+    return bmp
 }

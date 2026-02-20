@@ -203,6 +203,7 @@ fun HomeScreen(
                                     packageNameOne = state.buttonAppOne,
                                     packageNameTwo = state.buttonAppTwo,
                                     apps = state.apps,
+                                    isThemed = true,
                                 )
 
                             } else {

@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.1"
+agp = "8.12.3"
 biometric = "1.1.0"
 coilCompose = "2.6.0"
 datastorePreferences = "1.1.4"
@@ -21,6 +21,8 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.10.1"
 koin-bom = "4.0.3"
+material3 = "1.4.0"
+composeMaterial = "1.5.6"
 
 [libraries]
 androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
@@ -56,6 +58,8 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
 koin-core = { module = "io.insert-koin:koin-core" }
+material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

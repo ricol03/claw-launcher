@@ -1,6 +1,7 @@
 package com.whiskersapps.clawlauncher.settings.style
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.whiskersapps.clawlauncher.R
@@ -85,6 +86,7 @@ class StyleSettingsScreenVM(
             is StyleSettingsScreenIntent.IconPackSelected -> {
                 closeIconPackDialog()
                 selectIconPack(intent.iconPack)
+
             }
         }
     }
@@ -147,8 +149,17 @@ class StyleSettingsScreenVM(
     private fun selectIconPack(iconPack: String) {
         viewModelScope.launch(Dispatchers.IO) {
             settingsRepo.setIconPack(iconPack)
-
             appsRepo.fetchApps()
+            if (iconPack != "")
+                setIsThemed(true)
+            else
+                setIsThemed(false)
+        }
+    }
+
+    private fun setIsThemed(isThemed: Boolean) {
+        _state.update {
+            it.copy(isThemed = isThemed)
         }
     }
 }

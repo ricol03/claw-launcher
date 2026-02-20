@@ -51,7 +51,7 @@ val appModule = module {
     }
 
     single {
-        IconPacksRepo(get(), get())
+        IconPacksRepo(get(), get(), get())
     }
 
     single<AppsRepo> {

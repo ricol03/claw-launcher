@@ -71,7 +71,7 @@ fun HiddenAppsDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(modifier = Modifier.size(36.dp)) {
-                        AppIcon(app = app, useThemed = true)
+                        AppIcon(app = app, isThemed = true)
                     }
 
                     Spacer(modifier = Modifier.width(8.dp))

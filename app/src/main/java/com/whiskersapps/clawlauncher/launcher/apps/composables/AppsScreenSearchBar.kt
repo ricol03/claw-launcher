@@ -41,7 +41,8 @@ fun AppsScreenSearchBar(
             secondButton = false,
             packageNameOne = null,
             packageNameTwo = null,
-            apps = null
+            apps = null,
+            isThemed = false
         )
     }
 }

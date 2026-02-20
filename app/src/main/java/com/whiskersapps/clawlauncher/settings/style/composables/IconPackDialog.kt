@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.core.graphics.drawable.toBitmap
 import com.whiskersapps.clawlauncher.R
 import com.whiskersapps.clawlauncher.shared.model.App
 import com.whiskersapps.clawlauncher.shared.view.composables.DialogFooter
@@ -66,9 +67,10 @@ fun IconPackDialog(
                             }
                         )
                     }
+
                     items(items = iconPacks, key = { it.packageName }) { iconPack ->
                         IconPackItem(
-                            icon = iconPack.icons.stock.default,
+                            icon = iconPack.icons.stock.drawable.toBitmap(),
                             name = iconPack.name,
                             onClick = {
                                 onIconPackSelected(iconPack.packageName)

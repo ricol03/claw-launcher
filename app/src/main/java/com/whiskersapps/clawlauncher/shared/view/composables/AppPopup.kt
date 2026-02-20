@@ -52,7 +52,7 @@ fun AppPopup(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    AppIcon(app = app, size = 64.dp, useThemed = true)
+                    AppIcon(app = app, size = 64.dp, isThemed = true)
 
                     Spacer(Modifier.height(16.dp))
 
@@ -115,7 +115,7 @@ fun AppPopup(
                                 Spacer(modifier = Modifier.width(8.dp))
 
                                 Text(
-                                    text = shortcut.label,
+                                    text = shortcut.text,
                                     color = MaterialTheme.colorScheme.onBackground,
                                 )
                             }

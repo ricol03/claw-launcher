@@ -66,6 +66,7 @@ class AppsRepo(
 
             val newApps = packageManager.queryIntentActivities(launcherIntent, 0).map { appIntent ->
                 val packageName = appIntent.activityInfo.packageName
+                val iconPack = settingsRepo.settings.value.iconPack
                 val appInfo = packageManager.getApplicationInfo(packageName, 0)
 
                 val name = appInfo.loadLabel(packageManager).toString()
@@ -86,7 +87,7 @@ class AppsRepo(
 
                             Shortcut(
                                 id = shortcut.id,
-                                label = shortcut.shortLabel.toString(),
+                                text = shortcut.shortLabel.toString(),
                                 icon = icon?.toBitmap()
                             )
                         } ?: emptyList()

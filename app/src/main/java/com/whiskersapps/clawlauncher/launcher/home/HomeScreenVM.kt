@@ -46,7 +46,7 @@ class HomeScreenVM(
                         setSecondQuickButton = settings.showSecondQuickButton,
                         buttonAppOne = settings.buttonAppOne,
                         buttonAppTwo = settings.buttonAppTwo,
-
+                        isThemed = settings.isThemed
                         )
                 }
             }

@@ -10,6 +10,7 @@ import com.whiskersapps.clawlauncher.shared.model.Settings.Companion.DEFAULT_BUT
 import com.whiskersapps.clawlauncher.shared.model.Settings.Companion.DEFAULT_CLOCK_PLACEMENT
 import com.whiskersapps.clawlauncher.shared.model.Settings.Companion.DEFAULT_DARK_MODE
 import com.whiskersapps.clawlauncher.shared.model.Settings.Companion.DEFAULT_HOME_SEARCH_BAR_RADIUS
+import com.whiskersapps.clawlauncher.shared.model.Settings.Companion.DEFAULT_IS_THEMED
 import com.whiskersapps.clawlauncher.shared.model.Settings.Companion.DEFAULT_PILL_SHAPE_CLOCK
 import com.whiskersapps.clawlauncher.shared.model.Settings.Companion.DEFAULT_SHOW_HOME_SEARCH_BAR
 import com.whiskersapps.clawlauncher.shared.model.Settings.Companion.DEFAULT_SWIPE_UP_TO_SEARCH
@@ -38,6 +39,7 @@ data class HomeScreenState(
     val setSecondQuickButton: Boolean = DEFAULT_SECOND_QUICK_BUTTON,
     val buttonAppOne: String = DEFAULT_BUTTON_APP_ONE,
     val buttonAppTwo: String = DEFAULT_BUTTON_APP_TWO,
+    val isThemed: Boolean = DEFAULT_IS_THEMED,
 
     // Dialogs
     val showMenuDialog: Boolean = false,

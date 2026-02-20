@@ -122,7 +122,9 @@ class SettingsRepo(
                 buttonAppTwo = preferences[Settings.BUTTON_APP_TWO]
                     ?: Settings.DEFAULT_BUTTON_APP_TWO,
 
-                iconPack = preferences[Settings.ICON_PACK] ?: Settings.DEFAULT_ICON_PACK
+                iconPack = preferences[Settings.ICON_PACK] ?: Settings.DEFAULT_ICON_PACK,
+
+                isThemed = preferences[Settings.IS_THEMED] ?: Settings.DEFAULT_IS_THEMED
             )
 
             _settings.update { newSettings }
@@ -294,5 +296,9 @@ class SettingsRepo(
 
     suspend fun setIconPack(packageName: String) {
         dataStore.edit { it[Settings.ICON_PACK] = packageName }
+    }
+
+    suspend fun setIsThemed(isThemed: Boolean) {
+        dataStore.edit { it[Settings.IS_THEMED] = isThemed }
     }
 }

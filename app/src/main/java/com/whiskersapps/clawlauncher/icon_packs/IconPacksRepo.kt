@@ -6,10 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.AdaptiveIconDrawable
-import android.graphics.drawable.Icon
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.drawable.toDrawable
 import com.whiskersapps.clawlauncher.settings.di.SettingsRepo
 import com.whiskersapps.clawlauncher.shared.model.App
 import com.whiskersapps.clawlauncher.shared.model.App.Icons
@@ -17,15 +17,20 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.launch
+import org.whiskersapps.droid.droid_icons.IconFetcher
+import org.whiskersapps.droid.droid_icons.models.Icon
 import org.xmlpull.v1.XmlPullParser
 
 class IconPacksRepo(
     private val app: Application,
-    private val settingsRepo: SettingsRepo
+    private val settingsRepo: SettingsRepo,
+    context: Context
 ) {
     private val packageManager = app.packageManager
     private var iconPacks = emptyList<String>()
     private var currentIconPack = ""
+
+    val iconFetcher = IconFetcher(context)
 
     init {
         fetchIconPacks()
@@ -40,18 +45,21 @@ class IconPacksRepo(
     }
 
     fun fetchIconPacks() {
-        val iconPacksIntent = Intent("com.novalauncher.THEME")
-
-        iconPacks = packageManager.queryIntentActivities(iconPacksIntent, 0)
-            .map { it.activityInfo.packageName }
+        val iconPacksAux = iconFetcher.getIconPacks()
+        val iconPacks = mutableListOf<String>()
+        for (icon in iconPacksAux) {
+            iconPacks.add(icon.packageName)
+        }
     }
 
     /** Gets the themed icon for the app. */
-    private fun getThemedIcon(iconPack: String, appPackageName: String): App.Icon? {
+    private fun getThemedIcon(iconPack: String, appPackageName: String): Icon? {
         try {
             val iconPackContext = app.createPackageContext(
                 iconPack, Context.CONTEXT_IGNORE_SECURITY
             )
+
+            Log.i("contexto", iconPackContext.toString())
 
             val appFilterId = getResourceId(iconPackContext, "xml", "appfilter")
             if (appFilterId == 0) return null
@@ -78,35 +86,25 @@ class IconPacksRepo(
                                         val drawableId =
                                             getResourceId(iconPackContext, "drawable", drawable)
                                         if (drawableId != 0) {
+
                                             val iconDrawable = ResourcesCompat.getDrawable(
                                                 iconPackContext.resources,
                                                 drawableId,
-                                                null
-                                            )
-
-                                            if (iconDrawable == null) {
+                                                iconPackContext.theme
+                                            ) ?: run {
+                                                Log.e("icon", "Drawable is null")
                                                 return null
                                             }
 
-                                            val default = iconDrawable.toBitmap()
-                                            val adaptive = iconDrawable is AdaptiveIconDrawable
-                                            var background: Bitmap? = null
-                                            var foreground: Bitmap? = null
-
-                                            if (adaptive) {
-                                                val adaptiveIcon =
-                                                    (iconDrawable as AdaptiveIconDrawable)
-
-                                                background = adaptiveIcon.background.toBitmap()
-                                                foreground = adaptiveIcon.foreground.toBitmap()
+                                            if (iconDrawable is AdaptiveIconDrawable) {
+                                                return Icon(
+                                                    drawable = iconDrawable,
+                                                    adaptive = Icon.Adaptive(
+                                                        iconDrawable.background,
+                                                        iconDrawable.foreground
+                                                    )
+                                                )
                                             }
-
-                                            return App.Icon(
-                                                default = default,
-                                                adaptive = adaptive,
-                                                foreground = foreground,
-                                                background = background
-                                            )
                                         }
                                     }
                                 }
@@ -122,7 +120,7 @@ class IconPacksRepo(
         }
     }
 
-    private fun getStockIcon(packageName: String): App.Icon {
+    private fun getStockIcon(packageName: String): Icon {
         val appInfo = packageManager.getApplicationInfo(packageName, 0)
         val iconDrawable = packageManager.getApplicationIcon(appInfo)
 
@@ -140,11 +138,20 @@ class IconPacksRepo(
             }
         }
 
-        return App.Icon(
-            default = default,
-            adaptive = adaptive,
-            foreground = foreground,
-            background = background
+        val iconPackContext = app.createPackageContext(
+            packageName, Context.CONTEXT_IGNORE_SECURITY
+        )
+
+        var adapatito = foreground?.toDrawable(iconPackContext.resources)?.let {
+            Icon.Adaptive(
+                background?.toDrawable(iconPackContext.resources),
+                it
+            )
+        }
+
+        return Icon(
+            drawable = iconDrawable,
+            adaptive = adapatito
         )
     }
 
@@ -155,9 +162,6 @@ class IconPacksRepo(
             settingsRepo.settings.value.iconPack,
             packageName
         ) else null
-
-        Log.i("icone stock", stockIcon.toString())
-        Log.i("icone buscado", themedIcon.toString())
 
         return Icons(
             stock = stockIcon,
@@ -173,7 +177,8 @@ class IconPacksRepo(
             App(
                 packageName = intent.activityInfo.packageName,
                 name = intent.activityInfo.loadLabel(packageManager).toString(),
-                icons = getAppIcons(intent.activityInfo.packageName)
+                icons = getAppIcons(intent.activityInfo.packageName),
+                shortcuts = emptyList()
             )
         }
     }

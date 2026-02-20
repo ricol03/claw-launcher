@@ -113,7 +113,10 @@ data class Settings(
     val hideAppLabels: Boolean = DEFAULT_HIDE_APP_LABELS,
 
     /** The selected icon pack */
-    val iconPack: String = DEFAULT_ICON_PACK
+    val iconPack: String = DEFAULT_ICON_PACK,
+
+    /** Notifies if the icon pack is being themed or not*/
+    val isThemed: Boolean = DEFAULT_IS_THEMED
 ) {
     companion object {
         val SETUP_COMPLETED = booleanPreferencesKey("setup-completed")
@@ -187,8 +190,6 @@ data class Settings(
         val BUTTON_APP_TWO = stringPreferencesKey("button-two")
         val DEFAULT_BUTTON_APP_TWO = ""
 
-
-
         val SECOND_QUICK_BUTTON = booleanPreferencesKey("second-quick-button")
         const val DEFAULT_SECOND_QUICK_BUTTON = false
 
@@ -206,5 +207,8 @@ data class Settings(
 
         val ICON_PACK = stringPreferencesKey("icon-pack")
         const val DEFAULT_ICON_PACK = ""
+
+        val IS_THEMED = booleanPreferencesKey("is-themed")
+        const val DEFAULT_IS_THEMED = false
     }
 }
